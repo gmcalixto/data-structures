@@ -1,6 +1,6 @@
 //
-//  linked_list.cpp
-//  Exemplo de Lista Encadeada
+//  main.cpp
+//  TesteCpp
 //
 //  Created by Gustavo Calixto on 13/02/17.
 //  Copyright © 2017 Gustavo Calixto. All rights reserved.
@@ -20,6 +20,52 @@ struct Registro{
 //tipo de dado struct Registro redefinido para Celula através do comando typedef
 typedef struct Registro Celula;
 
+//assinatura das funcoes
+Celula* insere(int _dado,Celula *inicio);
+Celula* busca(int _dado,Celula *inicio);
+void imprime_dados(Celula *inicio);
+void limpa_celulas(Celula *inicio);
+void insere_celula(int apos_dado, Celula *inicio);
+void insere_celula(int dado_busca,int novo_numero, Celula *inicio);
+Celula* busca_anterior(Celula *inicio, Celula *frente);
+Celula* remove_celula(int dado_busca, Celula *inicio);
+
+
+
+int main(int argc, const char * argv[]) {
+    
+    Celula *minhaLista = NULL;
+    
+    minhaLista = insere(1, minhaLista);
+    minhaLista = insere(4, minhaLista);
+    minhaLista = insere(5, minhaLista);
+    minhaLista = insere(10, minhaLista);
+    minhaLista = insere(9, minhaLista);
+    
+    imprime_dados(minhaLista);
+    insere_celula(4, 17, minhaLista);
+    cout << "Lista com 17 adicionado" << endl;
+    imprime_dados(minhaLista);
+    
+    minhaLista = remove_celula(5, minhaLista);
+    cout << "Lista com 5 removido" << endl;
+    imprime_dados(minhaLista);
+    
+    Celula *resultado = busca(4, minhaLista);
+    if(resultado != NULL){
+        cout << "No encontrado " << resultado->dado << " endereco " << resultado << endl;
+    }
+    else{
+        cout << "Nao encontrado" << endl;
+    }
+    
+    
+    limpa_celulas(minhaLista);
+    
+    
+}
+
+//insere elemento na ponta da lista
 Celula* insere(int _dado,Celula *inicio){
     
     Celula *temp;
@@ -47,6 +93,7 @@ Celula* insere(int _dado,Celula *inicio){
     }
 }
 
+//busca elemento e retorna referência
 Celula* busca(int _dado,Celula *inicio){
     
     Celula *temp;
@@ -73,6 +120,34 @@ Celula* busca(int _dado,Celula *inicio){
     return NULL;
 }
 
+//retorna o elemento anterior ao indicado na variavel frente
+Celula* busca_anterior(Celula *inicio, Celula *frente){
+    
+    Celula *temp;
+    
+    if(inicio == NULL){
+        return NULL;
+    }
+    else{
+        temp = inicio;
+        do{
+            if(temp->proximo == frente){
+                return temp;
+            }
+            temp = temp->proximo;
+            
+        }while(temp->proximo != NULL);
+        
+        //somente entra se for o caso da ultima celula
+        if(temp->proximo == frente){
+            return temp;
+        }
+    }
+    
+    return NULL;
+}
+
+//imprime toda a lista
 void imprime_dados(Celula *inicio){
     
     Celula *temp;
@@ -97,6 +172,7 @@ void imprime_dados(Celula *inicio){
     }
 }
 
+//apaga todas as celulas
 void limpa_celulas(Celula *inicio){
     
     Celula *temp,*anterior;
@@ -122,28 +198,33 @@ void limpa_celulas(Celula *inicio){
     }
 }
 
-int main(int argc, const char * argv[]) {
+//insere uma celula apos um dado indicado
+void insere_celula(int dado_busca,int novo_numero, Celula *inicio){
     
-    Celula *minhaLista;
+    Celula *temp = busca(dado_busca,inicio);
     
-    minhaLista = insere(1, minhaLista);
-    minhaLista = insere(4, minhaLista);
-    minhaLista = insere(5, minhaLista);
-    minhaLista = insere(10, minhaLista);
-    minhaLista = insere(9, minhaLista);
+    Celula *nova = new Celula();
+    nova->dado = novo_numero;
     
-    imprime_dados(minhaLista);
+    nova->proximo = temp->proximo;
+    temp->proximo = nova;
+}
+
+//remove uma celula indicada
+Celula* remove_celula(int dado_busca, Celula *inicio){
     
-    Celula *resultado = busca(20, minhaLista);
-    if(resultado != NULL){
-        cout << "No encontrado " << resultado->dado << " endereco " << resultado << endl;
+    Celula *temp = busca(dado_busca,inicio);
+    
+    if(temp == inicio){
+        temp = inicio->proximo;
+        delete inicio;
+        return temp;
     }
     else{
-        cout << "Nao encontrado" << endl;
+        Celula *anterior = busca_anterior(inicio, temp);
+        anterior->proximo = temp->proximo;
+        delete temp;
+        return inicio;
     }
-    
-    
-    limpa_celulas(minhaLista);
-    
-    
 }
+
