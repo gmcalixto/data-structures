@@ -61,7 +61,7 @@ int main(int argc, const char * argv[]) {
 //insere célula na árvore
 void insere(struct celula **raiz,int d){
     if(*raiz == NULL){
-        *raiz = malloc(sizeof(struct celula));
+        *raiz = (struct celula*) malloc(sizeof(struct celula));
         
         (*raiz)->dado = d;
         (*raiz)->pe = NULL;
@@ -70,7 +70,7 @@ void insere(struct celula **raiz,int d){
     else{
         if(d < (*raiz)->dado){
             if((*raiz)->pe == NULL){
-                (*raiz)->pe = malloc(sizeof(struct celula));
+                (*raiz)->pe = (struct celula*) malloc(sizeof(struct celula));
                 (*raiz)->pe->dado = d;
                 (*raiz)->pe->pe = NULL;
                 (*raiz)->pe->pd = NULL;
@@ -81,7 +81,7 @@ void insere(struct celula **raiz,int d){
         }
         else{
             if((*raiz)->pd == NULL){
-                (*raiz)->pd = malloc(sizeof(struct celula));
+                (*raiz)->pd = (struct celula*) malloc(sizeof(struct celula));
                 (*raiz)->pd->dado = d;
                 (*raiz)->pd->pe = NULL;
                 (*raiz)->pd->pd = NULL;
