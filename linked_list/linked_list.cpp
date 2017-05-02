@@ -70,12 +70,10 @@ Celula* insere(int _dado,Celula *inicio){
     
     Celula *temp;
     
-    //se celula inicial for nula, cria a primeira celula
     if(inicio == NULL){
         inicio = new Celula();
         inicio->dado = _dado;
         inicio->proximo = NULL;
-        cout << "No criado dado " << inicio->dado << " endereco " << inicio << endl;
         return inicio;
     }
     else{
@@ -88,7 +86,6 @@ Celula* insere(int _dado,Celula *inicio){
         temp->proximo = new Celula();
         temp->proximo->dado = _dado;
         temp->proximo->proximo = NULL;
-        cout << "No criado dado " << temp->proximo->dado << " endereco " << temp->proximo << endl;
         return inicio;
     }
 }
@@ -167,7 +164,6 @@ void imprime_dados(Celula *inicio){
             cont++;
         }while(temp->proximo != NULL);
         
-        //imprime ultima celula
         cout << "Celula " << cont+1 << "Valor " << temp->dado << endl;
     }
 }

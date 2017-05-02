@@ -111,11 +111,11 @@ void busca(struct celula *raiz,int d){
 }
 
 //varredura inorder (e-r-d)
-void varredura_inorder(struct celula *raiz){
+void varredura(struct celula *raiz){
     if(raiz != NULL){
-        varredura_inorder(raiz->pe);
+        varredura(raiz->pe);
         printf("%d \n",raiz->dado);
-        varredura_inorder(raiz->pd);
+        varredura(raiz->pd);
     }
     
 }
